@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { loadTasks, saveTasks } from './storage'
-import type { Task, TaskDraft } from './types'
+import { overlapsRange, type Task, type TaskDraft, type TimeRange } from './types'
 
 // crypto.randomUUID only exists in secure contexts (https or localhost), so it is
 // missing when the app is opened over plain http on a LAN address.
@@ -29,11 +29,18 @@ export function useTasks() {
     setTasks((prev) => prev.filter((t) => t.id !== id))
   }, [])
 
-  /** Picks a random task without removing it; returns null if the bag is empty. */
-  const drawRandom = useCallback((): Task | null => {
-    if (tasks.length === 0) return null
-    return tasks[Math.floor(Math.random() * tasks.length)]
-  }, [tasks])
+  /**
+   * Picks a random task (without removing it) whose time range overlaps `range`;
+   * returns null if no task qualifies.
+   */
+  const drawRandom = useCallback(
+    (range: TimeRange = {}): Task | null => {
+      const candidates = tasks.filter((t) => overlapsRange(t, range))
+      if (candidates.length === 0) return null
+      return candidates[Math.floor(Math.random() * candidates.length)]
+    },
+    [tasks],
+  )
 
   return { tasks, addTask, updateTask, removeTask, drawRandom }
 }

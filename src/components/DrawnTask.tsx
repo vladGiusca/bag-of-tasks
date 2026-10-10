@@ -2,15 +2,16 @@ import { formatTimeRange, type Task } from '../types'
 
 interface Props {
   task: Task | null
+  emptyMessage: string
   onDone: (id: string) => void
   onDismiss: () => void
 }
 
-export function DrawnTask({ task, onDone, onDismiss }: Props) {
+export function DrawnTask({ task, emptyMessage, onDone, onDismiss }: Props) {
   if (!task) {
     return (
       <section className="card">
-        <p>The bag is empty. Add some tasks first!</p>
+        <p>{emptyMessage}</p>
         <div className="actions">
           <button onClick={onDismiss}>OK</button>
         </div>

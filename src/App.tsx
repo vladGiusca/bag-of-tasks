@@ -1,11 +1,15 @@
 import { useCallback, useEffect, useState } from 'react'
 import { AddTaskModal } from './components/AddTaskModal'
+import { DrawControls } from './components/DrawControls'
 import { DrawnTask } from './components/DrawnTask'
 import { TaskList } from './components/TaskList'
-import type { Task, TaskDraft } from './types'
+import type { Task, TaskDraft, TimeRange } from './types'
 import { useTasks } from './useTasks'
 
-type View = { kind: 'home' } | { kind: 'drawn'; task: Task | null } | { kind: 'list' }
+type View =
+  | { kind: 'home' }
+  | { kind: 'drawn'; task: Task | null; filtered: boolean }
+  | { kind: 'list' }
 
 const TOAST_MS = 3000
 
@@ -24,6 +28,11 @@ export default function App() {
   const goHome = () => setView({ kind: 'home' })
   const closeAdd = useCallback(() => setAddOpen(false), [])
 
+  function handleDraw(range: TimeRange) {
+    const filtered = range.min !== undefined || range.max !== undefined
+    setView({ kind: 'drawn', task: drawRandom(range), filtered })
+  }
+
   function handleAdd(draft: TaskDraft) {
     addTask(draft)
     setAddOpen(false)
@@ -38,15 +47,19 @@ export default function App() {
 
       <nav className="main-actions">
         <button onClick={() => setAddOpen(true)}>Add a task</button>
-        <button className="primary" onClick={() => setView({ kind: 'drawn', task: drawRandom() })}>
-          Give me a task
-        </button>
         <button onClick={() => setView({ kind: 'list' })}>Inspect all tasks</button>
       </nav>
+
+      <DrawControls onDraw={handleDraw} />
 
       {view.kind === 'drawn' && (
         <DrawnTask
           task={view.task}
+          emptyMessage={
+            tasks.length > 0 && view.filtered
+              ? 'No task fits that time range. Try widening it.'
+              : 'The bag is empty. Add some tasks first!'
+          }
           onDone={(id) => {
             removeTask(id)
             goHome()
