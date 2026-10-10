@@ -9,6 +9,9 @@ A small web app holding a "bag" of tasks. You can:
 Each task has a title, an `isPersistent` flag, and optional min/max time in minutes.
 All data is stored in the browser's `localStorage` (key `bag-of-tasks:v1`) — no database.
 
+A switch in the top-right corner picks the interface: **Classic** or **Modern** (a pixel-art platformer scene: draw a task and the bag shoots out a coin you click to reveal it). The choice is remembered (key `bag-of-tasks:ui`).
+Both UIs share the task logic in `src/useTasks.ts`; each UI lives in its own folder under `src/ui/`.
+
 ## Running
 
 ```sh

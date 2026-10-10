@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react'
-import type { TimeRange } from '../types'
+import type { TimeRange } from '../../../types'
 
 interface Props {
   onDraw: (range: TimeRange) => void

@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
-import type { TaskDraft } from '../types'
-import { TaskForm } from './TaskForm'
+import type { TaskDraft } from '../../../types'
+import { TaskForm } from '../../../components/TaskForm'
 
 interface Props {
   onAdd: (draft: TaskDraft) => void

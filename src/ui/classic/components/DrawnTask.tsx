@@ -1,4 +1,4 @@
-import { formatTimeRange, type Task } from '../types'
+import { formatTimeRange, type Task } from '../../../types'
 
 interface Props {
   task: Task | null
