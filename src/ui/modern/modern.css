@@ -51,11 +51,11 @@
     position: absolute;
     left: 0;
     animation: cloud-drift linear infinite;
-    animation-timing-function: steps(300);
+    animation-timing-function: steps(500);
   }
-  .cloud-1 { top: 72px; width: 96px; animation-duration: 70s; animation-delay: -20s; }
-  .cloud-2 { top: 150px; width: 128px; animation-duration: 95s; animation-delay: -62s; }
-  .cloud-3 { top: 36px; width: 64px; animation-duration: 55s; animation-delay: -5s; }
+  .cloud-1 { top: 72px; width: 96px; animation-duration: 120s; animation-delay: -35s; }
+  .cloud-2 { top: 150px; width: 128px; animation-duration: 160s; animation-delay: -105s; }
+  .cloud-3 { top: 36px; width: 64px; animation-duration: 95s; animation-delay: -10s; }
 
   /* ---------- Ground ---------- */
 
